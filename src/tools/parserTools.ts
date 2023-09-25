@@ -20,16 +20,18 @@ interface ToNumberOptions {
 
 export class TransformHelper {
    static getInitialDateRange():Date[] {
-      let storageDateRange = localStorage.getItem('preserve_date_range');  
-      let initialDate:Date[] = [];
-      if (storageDateRange) {
-         const dateRange:Date[] = JSON.parse(storageDateRange);
-         if (dateRange && typeof dateRange === 'object' && dateRange.length) {
-            for (const date of dateRange) {
-               initialDate.push(new Date(date));
+      if (localStorage) {
+         let storageDateRange = localStorage.getItem('preserve_date_range');  
+         let initialDate:Date[] = [];
+         if (storageDateRange) {
+            const dateRange:Date[] = JSON.parse(storageDateRange);
+            if (dateRange && typeof dateRange === 'object' && dateRange.length) {
+               for (const date of dateRange) {
+                  initialDate.push(new Date(date));
+               }
+               return initialDate;
             }
-            return initialDate;
-         }
+         }         
       }
       return [new Date(), subDays(new Date(), 7),];
    }
